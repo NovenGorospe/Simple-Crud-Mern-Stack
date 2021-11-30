@@ -56,7 +56,7 @@ export default function EditUser({userProp}){
 		                	.then(data => {
 		                		console.log(`${data} dataDATA`);
 		                		Swal.fire({
-		                			title:"Add User Successfully",
+		                			title:"Edit User Successfully",
 		                			icon:"success",
 		                			text:""
 		                		});
@@ -111,7 +111,7 @@ export default function EditUser({userProp}){
 		    			     />
 		    			  </Form.Group>
 		    				<Button variant="primary" type="submit" id="submitBtn" className="m-3">
-		    					Edit user
+		    					Update user
 		    				</Button>
 		    			</Form>
 		    		</Container>

@@ -16,9 +16,6 @@ export default function User(){
 			const [user, setUser] = useState([]);
 				// let history = useHistory();
 
-				
-		
-
 			useEffect(() => {
 				 fetch("http://localhost:4000/users/")
 				.then(res => res.json())
