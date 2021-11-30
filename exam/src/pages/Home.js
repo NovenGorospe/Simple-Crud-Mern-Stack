@@ -2,20 +2,21 @@ import React from 'react';
 import {useEffect, useState } from 'react';
 import { Fragment } from 'react'
 import { Container} from 'react-bootstrap';
-import {Link, NavLink} from 'react-router-dom';
-import { Row, Col, Button, Form, tr, td, th, thead,Table, tbody} from 'react-bootstrap';
-import CardUser from '../component/CardUser';
-import UserContext from '../UserContext';
+import {Link} from 'react-router-dom';
+import { Button, Table} from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import {useParams } from 'react-router-dom'
 // import {useContext } from 'react'
 
 
-export default function User(userProp){
-	const {_id, firstName, lastName, address} = userProp;
-	const userId = userProp.match.params.userId;
-			
+export default function User(){
+	// const {_id, firstName, lastName, address} = userProp;
+
+			const { userId } = useParams();
 			const [user, setUser] = useState([]);
 				// let history = useHistory();
-		
+
+				
 		
 
 			useEffect(() => {
@@ -28,19 +29,40 @@ export default function User(userProp){
 							  		let lastName = props.lastName;
 							  		let address = props.address;
 
+							  		const deleteItem = async(userId) =>{
+							  			        fetch(`http://localhost:4000/users/${props._id}`, {
+							  		                		method: 'DELETE',
+							  		                		headers:{
+							  		                			'Content-Type' : 'application/json'
+							  		                		}
 
+							  		                	})
+							  		                	.then(res => res.json())
+							  		                	.then(data => {
+							  		                		console.log(`${data} dataDATA`);
+							  		                		if(data !== false){
+							  		                			Swal.fire({
+							  		                			title:"Deleted User Successfully",
+							  		                			icon:"success",
+							  		                			text:""
+							  		                		});
+							  		                		}
+							  		                	})
+							  		                	window.location.reload(false)
+
+							  		                }
+
+							  	
 							  		return(
 							  			<Fragment>
-							  				    <tr id="${_id}">
+							  				    <tr id={`${props._id}`} >
 							  				      <td  className="thcart">{firstName}</td>
 							  				      <td className="thprice">{lastName}</td>
 							  				       <td className="thprice">{address}</td>
 							  				       <td className="thprice">
-							  				         <Link className="btn btn-primary ml-4"  style={{width:220}} >Edit user</Link>
+							  				         <Link className="btn btn-primary ml-4"  style={{width:220}} /*onClick={getDetails} value={userId}*/ to={`/edituser/${props._id}`}>Edit user</Link>
 
-							  				         {/* <Link className="btn btn-success ml-4"  style={{width:220}} onPress={getDetails} to={`/products/${_id}`}>Details</Link>
-*/}
-							  				       		
+							  				          <Link className="btn btn-success ml-4"  value= {userId} style={{width:220}} onClick={deleteItem}>Delete</Link>
 							  				       </td>
 
 							  			   		 </tr>

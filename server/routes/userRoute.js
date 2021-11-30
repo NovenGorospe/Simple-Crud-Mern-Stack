@@ -29,4 +29,9 @@ router.get("/", (req,res)=>{
 	userController.getAllUser().then(resultFromController => res.send(resultFromController));
 })
 
+// Routes to get aspeccfic task task
+router.get("/:id", (req,res)=>{
+	userController.getSpecificUser(req.params.id, req.body).then(resultFromController => res.send(resultFromController));
+})
+
 module.exports = router

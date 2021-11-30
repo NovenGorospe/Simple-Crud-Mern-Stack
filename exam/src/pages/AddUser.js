@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState} from 'react';
 import React from 'react';
 import { Fragment } from 'react'
-import {Link, NavLink} from 'react-router-dom';
 import { Row, Col, Button, Form} from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom'
 import { Container} from 'react-bootstrap';
-import UserContext from '../UserContext';
 
 
 export default function AddUser(){

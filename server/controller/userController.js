@@ -50,15 +50,29 @@ module.exports.edituser = (userId, newStatus)=>{
 	})
 }
 
-// controller function for deleteTask
-module.exports.deleteUser = (userId) =>{
-	return User.findByIdAndRemove(userId).then((removedUser, err)=>{
+// controller function for delete user
+module.exports.deleteUser =  async(userId) =>{
+	return User.deleteOne({_id:userId}).then((removedUser, err)=>{
 		if(err){
 			console.log(err);
 			return false;
 		}
 		else{
 			return removedUser;
+		}
+	})
+}
+
+
+// Controller function for getting specific  User
+module.exports.getSpecificUser = (userId)=>{
+	return User.findById(userId).then((result,err)=>{
+		if(err){
+			console.log(err);
+			return false;
+		}
+		else{
+			return result;
 		}
 	})
 }

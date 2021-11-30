@@ -1,10 +1,5 @@
-import { Container, } from 'react-bootstrap';
-import { Fragment } from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
-import { Row, Col, Button, Form, tr, td, th, thead,Table, tbody} from 'react-bootstrap';
 import {Route, Switch} from 'react-router-dom';
-import { UserProvider } from './UserContext';
-import {useState, useEffect } from 'react';
 import AddUser from './pages/AddUser';
 import EditUser from './pages/EditUser';
 

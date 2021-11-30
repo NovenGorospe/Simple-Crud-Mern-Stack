@@ -1,30 +1,44 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect} from 'react';
 import React from 'react';
 import { Fragment } from 'react'
-import {Link, NavLink} from 'react-router-dom';
 import { Row, Col, Button, Form} from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Container} from 'react-bootstrap';
-import UserContext from '../UserContext';
 
 
 
 export default function EditUser({userProp}){
 	console.log(userProp)
-		
-	const userId = userProp.match.params.userId;
-		const {_id, firstName, lastName, address} = userProp;
+	
+		const [firstName,setFirstName] = useState('');
+		const [lastName, setLastName] = useState('');
+		const [address, setAddress] = useState('');
 
-			// document.querySelector(`#formId`).innerHTML = "John";	
+		const { userId } = useParams();
 		let history = useHistory();
 
-			//  function to simulate user registration
-				async function Update(e){
-					 // Prevents page redirection via form submission
+
+
+				useEffect(()=>{
+
+						fetch(`http://localhost:4000/users/${userId}`)
+						.then (res=> res.json())
+						.then(data =>{
+							console.log(`data${data}`);
+							setFirstName(data.firstName)
+							setLastName(data.lastName)
+							setAddress(data.address)
+							
+						})
+					}, [])
+
+
+		async function Update(e){
+					 
 			        e.preventDefault();
 			        
-			        fetch(`http://localhost:4000/users/${_id}`, {
+			        fetch(`http://localhost:4000/users/${userId}`, {
 		                		method: 'PUT',
 		                		headers:{
 		                		    'Content-Type':'application/json'
@@ -59,27 +73,18 @@ export default function EditUser({userProp}){
 
 	<Fragment>
 		<Container className="mt-5">
-				<Row>
-					    <tr id="${_id}">
-					      <td  className="thcart" id="firstName-${_id}">Firstname</td>
-					      <td className="thprice" id="lastName-${_id}">{lastName}</td>
-					       <td className="thprice" id="address-${_id}">{address}</td>
-				   		 </tr>
-				</Row>
-
-
 		  <Row>
 		    
 			<Col>
 		    	<Container>
 		    			<Form  onSubmit = {(e)=> Update(e)} >
-		    			  <Form.Group  id="formId" controlId="formFirstName">
+		    			  <Form.Group controlId="formBasicEmail">
 		    			    <Form.Label>First Name</Form.Label>
-		    			    <Form.Control 
-		    			   placeholder = "{firstName}"
+		    			    <Form.Control
 		    			    type="text" 
+		    			    placeholder="First Name"
 		    			    value={firstName}
-		    			 /*   onChange = { e => setFirstName(e.target.value)}*/
+		    			    onChange = { e => setFirstName(e.target.value)}
 		    			    required
 		    			     />
 		    			  </Form.Group>
@@ -88,8 +93,9 @@ export default function EditUser({userProp}){
 		    			    <Form.Label>Last Name</Form.Label>
 		    			    <Form.Control
 		    			    	type="text" 
+		    			    	placeholder="Last Name"
 		    			    	value={lastName}
-		    			    /*	onChange = { e => setLastName(e.target.value)}*/
+		    			    	onChange = { e => setLastName(e.target.value)}
 		    			    	required
 
 		    			     />
@@ -98,8 +104,9 @@ export default function EditUser({userProp}){
 		    			    <Form.Label>Address</Form.Label>
 		    			    <Form.Control
 		    			    	type="text" 
+		    			    	placeholder="Address"
 		    			    	value={address}
-		    			    /*	onChange = { e => setAddress(e.target.value)}*/
+		    			    	onChange = { e => setAddress(e.target.value)}
 		    			    	required
 		    			     />
 		    			  </Form.Group>
